@@ -220,8 +220,13 @@ func createJar(target, jarDir string) error {
 	}
 
 	fullPath := cwd + "/" + target
+
 	if _, err := os.Stat(fullPath); err == nil {
-		os.Remove(fullPath)
+		err := os.Remove(fullPath)
+
+		if err != nil {
+			return err
+		}
 	}
 
 	t, err := os.OpenFile(target, os.O_CREATE|os.O_RDWR, 0600)
